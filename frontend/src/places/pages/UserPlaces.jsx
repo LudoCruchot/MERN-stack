@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import PlaceList from "../components/PlacesList";
 
@@ -27,12 +28,27 @@ const DUMMY_PLACES = [
       lat: 48.8560088,
       lng: 2.2882714,
     },
-    creator: "u2",
+    creator: "u1",
+  },
+  {
+    id: "p3",
+    title: "La barquette",
+    description: "Objectif du 501st PIR",
+    imageUrl:
+      "https://www.wikimanche.fr/images/thumb/6/6d/Stcome-1944-pontbarquette1.jpg/300px-Stcome-1944-pontbarquette1.jpg",
+    address: "Dans les marais de Carentan",
+    location: {
+      lat: 49.32538,
+      lng: -1.2455311,
+    },
+    creator: "u1",
   },
 ];
 
 const UserPlaces = (props) => {
-  return <PlaceList items={DUMMY_PLACES} />;
+  const userId = useParams().userId;
+  const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
+  return <PlaceList items={loadedPlaces} />;
 };
 
 export default UserPlaces;
