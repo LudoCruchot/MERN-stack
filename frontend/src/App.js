@@ -6,6 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 import Users from "./user/pages/Users.jsx";
+import Auth from "./user/pages/Auth.jsx";
 import NewPlace from "./places/pages/NewPlace.jsx";
 import UpdatePlace from "./places/pages/UpdatePlace.jsx";
 import UserPlaces from "./places/pages/UserPlaces";
@@ -19,6 +20,9 @@ const App = () => {
         <Switch>
           <Route path="/" exact>
             <Users />
+          </Route>
+          <Route path="/auth">
+            <Auth />
           </Route>
           <Route path="/:userId/places" exact>
             <UserPlaces />
