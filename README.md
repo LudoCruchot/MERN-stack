@@ -14,7 +14,7 @@ You can login, add many places with their own picture and description but also t
 ### Installing
 
 ```
-git clone git@github.com:LudoCruchot/MERN-stack.git <yourLocalRepo>
+git clone git@github.com:LudoCruchot/Places.git <yourLocalRepo>
 cd <yourLocalRepo>/frontend
 npm install
 cd ../backend
