@@ -30,7 +30,7 @@ Running frontend
 npm start
 ```
 
-Running backend
+Running backend (currently in construction)
 
 ```
 <yourLocalRepo>/backend
