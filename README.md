@@ -1,7 +1,7 @@
 # PLACES
 
-Places is a web project using MERN stack. You can share places you love with others users.\
-You can login, add many places with their own picture and description but also their location on a Google map.
+Places is a web application using MERN stack. You can share places you love with others users.\
+You can login, add many places with their own picture and description but also add their location on a Google map.
 
 ## Getting started
 
