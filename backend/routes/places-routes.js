@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getPlaceById,
-  getPlaceByUserId,
+  getPlacesByUserId,
   createPlace,
   updatePlace,
   deletePlace,
@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/:placeId", getPlaceById);
 
-router.get("/user/:userId", getPlaceByUserId);
+router.get("/user/:userId", getPlacesByUserId);
 
 router.post("/", createPlace);
 
