@@ -1,8 +1,11 @@
 import { validationResult } from "express-validator";
+import mongooseUniqueValidator from "mongoose-unique-validator";
+import mongoose from "mongoose";
 
 import HttpError from "../models/http-error";
 import { getCoordsForAddress } from "../utils/location";
 import Place from "../models/place";
+import User from "../models/user";
 
 export const getPlaceById = async (req, res, next) => {
   const placeId = req.params.placeId;
@@ -80,10 +83,37 @@ export const createPlace = async (req, res, next) => {
     creator,
   });
 
+  let user;
   try {
-    await createdPlace.save();
+    user = await User.findById(creator);
+  } catch (error) {
+    return next(
+      new HttpError(
+        "Creating place failed, please try again (user not found)",
+        500
+      )
+    );
+  }
+
+  if (!user) {
+    return next(new HttpError("Could not find user for the provided id", 404));
+  }
+
+  try {
+    const sess = await mongoose.startSession(); // transaction permet d'executer plusieurs opérations en isolation et tout annuler si l'une d'elle fail
+    sess.startTransaction();
+    try {
+      await createdPlace.save({ session: sess });
+    } catch (error) {
+      console.log(error);
+    }
+    user.places.push(createdPlace);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
-    return next(new HttpError("Creating place failed, please try again", 500));
+    return next(
+      new HttpError("Creating place failed, please try again giga fail", 500)
+    );
   }
 
   res.status(201).json({ place: createdPlace });
@@ -129,18 +159,27 @@ export const deletePlace = async (req, res, next) => {
   const placeId = req.params.placeId;
   let place;
   try {
-    place = await Place.findById(placeId);
+    place = await Place.findById(placeId).populate("creator");
   } catch (error) {
     return next(
       new HttpError("Something went wrong, could not delete place", 500)
     );
   }
 
+  if (!place) {
+    return next(new HttpError("Could not find place for this id", 404));
+  }
+
   try {
-    await place.remove();
-  } catch (error) {
+    const sess = await mongoose.startSession(); // transaction permet d'executer plusieurs opérations en isolation et tout annuler si l'une d'elle fail
+    sess.startTransaction();
+    await place.remove({ session: sess });
+    place.creator.places.pull(place);
+    await place.creator.save({ session: sess });
+    await sess.commitTransaction();
+  } catch (err) {
     return next(
-      new HttpError("Something went wrong, could not delete place XXX", 500)
+      new HttpError("Creating place failed, please try again giga fail", 500)
     );
   }
 
