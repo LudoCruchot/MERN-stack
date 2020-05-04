@@ -32,7 +32,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(DB_URL, { useNewUrlParser: true })
+  .connect(DB_URL, { useNewUrlParser: true, useCreateIndex: true })
   .then(() => {
     console.log("Connected");
     app.listen(5000);

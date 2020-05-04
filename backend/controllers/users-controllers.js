@@ -1,11 +1,18 @@
-import uuid from "uuid/v4";
 import { validationResult } from "express-validator";
 
 import HttpError from "../models/http-error";
 import User from "../models/user";
 
-export const getAllUsers = (req, res, next) => {
-  res.json({ users: DUMMY_USERS });
+export const getAllUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({}, "-password");
+  } catch (error) {
+    return next(
+      new HttpError("Fetching users failed, please try again later", 500)
+    );
+  }
+  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
 export const signup = async (req, res, next) => {
@@ -51,16 +58,22 @@ export const signup = async (req, res, next) => {
   res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
-export const login = (req, res, next) => {
+export const login = async (req, res, next) => {
   const { email, password } = req.body;
-  const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
 
-  if (!identifiedUser || identifiedUser.password !== password) {
-    throw new HttpError(
-      "Could not identified user, credentials seem to be wrong",
-      401
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (error) {
+    return next(
+      new HttpError("Logging in failed, please try again later", 500)
     );
   }
 
+  if (!existingUser || existingUser.password !== password) {
+    return next(
+      new HttpError("Invalid credentials, could not log you in", 500)
+    );
+  }
   res.json({ message: "LOGGED IN" });
 };
