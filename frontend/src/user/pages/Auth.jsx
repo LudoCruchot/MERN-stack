@@ -12,6 +12,8 @@ import "./Auth.css";
 import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
+const BASE_API_URL = process.env.BASE_API_URL;
+
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -29,9 +31,12 @@ const Auth = () => {
     false
   );
 
-  const authSubmitHandler = (event) => {
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
+
+    // peut remplacer par axios pour simplifier
+    fetch(BASE_API_URL + "/signup");
+
     auth.login();
   };
 
