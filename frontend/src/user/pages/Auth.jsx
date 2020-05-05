@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 
 import {
   VALIDATOR_EMAIL,
@@ -8,15 +9,18 @@ import {
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
-import "./Auth.css";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-
-const BASE_API_URL = process.env.BASE_API_URL;
+import "./Auth.css";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -31,13 +35,28 @@ const Auth = () => {
     false
   );
 
-  const authSubmitHandler = async (event) => {
+  const authSubmitHandler = (event) => {
     event.preventDefault();
 
-    // peut remplacer par axios pour simplifier
-    fetch(BASE_API_URL + "/signup");
-
-    auth.login();
+    if (isLoginMode) {
+    } else {
+      setIsLoading(true);
+      axios
+        .post("http://localhost:5000/api/users/signup", {
+          name: formState.inputs.name.value,
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
+        })
+        .then((response) => {
+          console.log(response.data.user);
+          setIsLoading(false);
+          auth.login();
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setError(error.message || "Something went wrong, please try again");
+        });
+    }
   };
 
   const switchModeHandler = () => {
@@ -66,6 +85,7 @@ const Auth = () => {
 
   return (
     <Card className="authentication">
+      {isLoading && <LoadingSpinner asOverlay />}
       <h2>Login required</h2>
       <hr />
       <form onSubmit={authSubmitHandler}>
