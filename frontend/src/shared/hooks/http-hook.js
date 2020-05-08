@@ -8,10 +8,10 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(async (url, method, data) => {
-    // usecallback pour pas que la fonction se recrée quand le composant qui l'utilise est maj
+    // useCalleback: make sure function doesnt recreate when the component using it is updated
     setIsLoading(true);
-    const httpAbortCtrll = new AbortController(); // permet d'annuler la requete si on change de page quand elle n'a pas fini de s'exécuter
-    activeHttpRequests.current.push(httpAbortCtrll);
+    const httpAbortCtrll = new AbortController();
+    activeHttpRequests.current.push(httpAbortCtrll); // make the request cancelable when we change the page and the request is still executing
     try {
       const response = await axios({
         method,
