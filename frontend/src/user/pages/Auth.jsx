@@ -42,54 +42,42 @@ const Auth = () => {
 
     if (isLoginMode) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        const response = await axios.post(
+          "http://localhost:5000/api/users/login",
+          {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-          }),
-        });
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
+          }
+        );
+        if (response.status === 200) {
+          setIsLoading(false);
+          auth.login();
         }
-        setIsLoading(false);
-        auth.login();
-        if (response.ok) {
-        }
-        setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again");
+        setError(
+          err.response.data.message || "Something went wrong, please try again"
+        );
       }
     } else {
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        const response = await axios.post(
+          "http://localhost:5000/api/users/signup",
+          {
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-          }),
-        });
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
+          }
+        );
+        if (response.status === 201) {
+          setIsLoading(false);
+          auth.login();
         }
-        setIsLoading(false);
-        auth.login();
-        if (response.ok) {
-        }
-        setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again");
+        setError(
+          err.response.data.message || "Something went wrong, please try again"
+        );
       }
     }
   };

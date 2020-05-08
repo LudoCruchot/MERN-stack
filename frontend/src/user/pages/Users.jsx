@@ -1,33 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import UsersList from "../components/UsersList";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const Users = () => {
-  const USERS = [
-    {
-      id: "u1",
-      name: "Antoine",
-      image:
-        "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      places: 3,
-    },
-    {
-      id: "u2",
-      name: "Zoé",
-      image:
-        "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      places: 128,
-    },
-    {
-      id: "u3",
-      name: "Claire",
-      image:
-        "https://images.pexels.com/photos/806835/pexels-photo-806835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      places: 55,
-    },
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const [users, setUsers] = useState();
 
-  return <UsersList items={USERS} />;
+  useEffect(() => {
+    const sendRequest = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get("http://localhost:5000/api/users");
+        if (response.status === 200) {
+          console.log(response);
+          setUsers(response.data.users);
+        }
+      } catch (err) {
+        setError(err.response.data.message);
+      }
+      setIsLoading(false);
+    };
+    sendRequest();
+  }, []);
+
+  const errorHandler = () => {
+    setError(null);
+  };
+
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} onClear={errorHandler} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && users && <UsersList items={users} />}
+    </React.Fragment>
+  );
 };
 
 export default Users;
