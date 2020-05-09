@@ -7,7 +7,7 @@ export const useHttpClient = () => {
 
   const activeHttpRequests = useRef([]);
 
-  const sendRequest = useCallback(async (url, method, data) => {
+  const sendRequest = useCallback(async (url, method = "GET", data = null) => {
     // useCalleback: make sure function doesnt recreate when the component using it is updated
     setIsLoading(true);
     const httpAbortCtrll = new AbortController();
