@@ -9,7 +9,7 @@ You can login, add many places with their own picture and description but also a
 
 - NodeJS
 - NPM
-- MongoDB (Atlas)
+- MongoDB (Atlas) (create the database and two collections: users and places)
 
 ### Installing
 

@@ -39,21 +39,30 @@ const Auth = () => {
 
     if (isLoginMode) {
       try {
-        await sendRequest("http://localhost:5000/api/users/login", "POST", {
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        });
-        auth.login();
+        const response = await sendRequest(
+          "http://localhost:5000/api/users/login",
+          "POST",
+          {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }
+        );
+        console.log(response);
+        auth.login(response.data.user.id);
       } catch (err) {
         console.warn(err);
       }
     } else {
       try {
-        await sendRequest("http://localhost:5000/api/users/signup", "POST", {
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        });
+        const response = await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          {
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }
+        );
         auth.login();
       } catch (err) {
         console.warn(err);
