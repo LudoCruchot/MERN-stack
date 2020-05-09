@@ -23,13 +23,14 @@ export const useHttpClient = () => {
         (reqCtrl) => reqCtrl !== httpAbortCtrll
       );
       if (response.status === 200 || response.status === 201) {
+        setIsLoading(false);
         return response;
       }
     } catch (err) {
       setError(err.response.data.message);
+      setIsLoading(false);
       throw err;
     }
-    setIsLoading(false);
   }, []);
 
   const clearError = () => {
