@@ -39,7 +39,6 @@ const NewPlace = () => {
 
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs); // send it to backend
     try {
       await sendRequest("http://localhost:5000/api/places", "POST", {
         title: formState.inputs.title.value,

@@ -63,7 +63,7 @@ const Auth = () => {
             password: formState.inputs.password.value,
           }
         );
-        auth.login();
+        auth.login(response.data.user.id);
       } catch (err) {
         console.warn(err);
       }
