@@ -93,7 +93,7 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn && (
+            {auth.userId === creatorId && (
               <React.Fragment>
                 <Button to={`/places/${id}`}>EDIT</Button>
                 <Button danger onClick={showDeleteWarningHandler}>

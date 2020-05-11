@@ -17,7 +17,7 @@ const NavLinks = (props) => {
       {auth.isLoggedIn && (
         <React.Fragment>
           <li>
-            <NavLink to="/u1/places">MY PLACES</NavLink>
+            <NavLink to={`${auth.userId}/places`}>MY PLACES</NavLink>
           </li>
           <li>
             <NavLink to="/places/new">ADD PLACES</NavLink>
