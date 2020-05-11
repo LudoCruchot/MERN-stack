@@ -26,6 +26,12 @@ const UserPlaces = (props) => {
     fetchPlaces();
   }, [sendRequest, userId]); // in tab add all the dependencies used in useEffect
 
+  const placeDeletedHandler = (deletedPlaceId) => {
+    setPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== deletedPlaceId)
+    );
+  };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -34,7 +40,9 @@ const UserPlaces = (props) => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && places && <PlaceList items={places} />}
+      {!isLoading && places && (
+        <PlaceList items={places} onDeletePlace={placeDeletedHandler} />
+      )}
     </React.Fragment>
   );
 };

@@ -6,7 +6,7 @@ import PlaceItem from "./PlaceItem";
 import Button from "../../shared/components/FormElements/Button";
 
 const PlacesList = (props) => {
-  const { items } = props;
+  const { items, onDeletePlace } = props;
   if (items.length === 0) {
     return (
       <div className="place-list center">
@@ -30,6 +30,7 @@ const PlacesList = (props) => {
           address={place.address}
           creatorId={place.creator}
           coordinates={place.location}
+          onDelete={onDeletePlace}
         />
       ))}
     </ul>
