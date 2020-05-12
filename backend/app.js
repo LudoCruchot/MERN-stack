@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-require("dotenv").config();
+import fs from "fs";
 
 import placesRoutes from "./routes/places-routes";
 import usersRoutes from "./routes/users-routes";
@@ -33,6 +33,11 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.warn(err);
+    });
+  }
   if (res.headerSent) {
     return next(error);
   }

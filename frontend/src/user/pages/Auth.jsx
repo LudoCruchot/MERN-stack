@@ -38,8 +38,6 @@ const Auth = () => {
   const authSubmitHandler = async (event) => {
     event.preventDefault();
 
-    console.log(formState.inputs);
-
     if (isLoginMode) {
       try {
         const response = await sendRequest(
@@ -57,14 +55,15 @@ const Auth = () => {
       }
     } else {
       try {
+        const formData = new FormData();
+        formData.append("email", formState.inputs.email.value);
+        formData.append("name", formState.inputs.name.value);
+        formData.append("password", formState.inputs.password.value);
+        formData.append("image", formState.inputs.image.value);
         const response = await sendRequest(
           "http://localhost:5000/api/users/signup",
           "POST",
-          {
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }
+          formData
         );
         auth.login(response.data.user.id);
       } catch (err) {

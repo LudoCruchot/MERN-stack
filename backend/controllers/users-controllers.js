@@ -41,8 +41,7 @@ export const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image:
-      "https://images.pexels.com/photos/162520/farmer-man-shepherd-dog-162520.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    image: req.file.path,
     password,
     places: [],
   });
