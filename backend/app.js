@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import fs from "fs";
+import path from "path";
 
 import placesRoutes from "./routes/places-routes";
 import usersRoutes from "./routes/users-routes";
@@ -12,6 +13,8 @@ const DB_URL = process.env.DB_URL;
 const app = express();
 
 app.use(bodyParser.json()); // get the json data of the body and call automatically next middleware
+
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
