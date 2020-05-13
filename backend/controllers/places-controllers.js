@@ -80,8 +80,7 @@ export const createPlace = async (req, res, next) => {
     description,
     address,
     location: coordinates,
-    image:
-      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    image: req.file.path,
     creator,
   });
 
