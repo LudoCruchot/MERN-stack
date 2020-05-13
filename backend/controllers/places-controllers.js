@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import mongoose from "mongoose";
+import fs from "fs";
 
 import HttpError from "../models/http-error";
 import { getCoordsForAddress } from "../utils/location";
@@ -171,6 +172,8 @@ export const deletePlace = async (req, res, next) => {
     return next(new HttpError("Could not find place for this id", 404));
   }
 
+  const imagePath = place.image;
+
   try {
     const sess = await mongoose.startSession(); // transaction permet d'executer plusieurs opérations en isolation et tout annuler si l'une d'elle fail
     sess.startTransaction();
@@ -183,6 +186,10 @@ export const deletePlace = async (req, res, next) => {
       new HttpError("Creating place failed, please try again giga fail", 500)
     );
   }
+
+  fs.unlink(imagePath, (err) => {
+    console.warn(err);
+  });
 
   res.status(200).json({ message: "Place deleted" });
 };
