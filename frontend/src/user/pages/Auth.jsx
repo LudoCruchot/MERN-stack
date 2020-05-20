@@ -48,8 +48,7 @@ const Auth = () => {
             password: formState.inputs.password.value,
           }
         );
-        console.log(response);
-        auth.login(response.data.user.id);
+        auth.login(response.data.userId, response.data.token);
       } catch (err) {
         console.warn(err);
       }
@@ -65,7 +64,7 @@ const Auth = () => {
           "POST",
           formData
         );
-        auth.login(response.data.user.id);
+        auth.login(response.data.userId, response.data.token);
       } catch (err) {
         console.warn(err);
       }
