@@ -12,7 +12,8 @@ export const useHttpClient = () => {
       // useCalleback: make sure function doesnt recreate when the component using it is updated
       setIsLoading(true);
       const httpAbortCtrll = new AbortController();
-      const headers = header ? { header } : null;
+      const headers = header ? { ...header } : null;
+      console.log("headers", headers);
       activeHttpRequests.current.push(httpAbortCtrll); // make the request cancelable when we change the page and the request is still executing
       try {
         const response = await axios({
