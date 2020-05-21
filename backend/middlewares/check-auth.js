@@ -2,7 +2,7 @@ import HttpError from "../models/http-error";
 import jwt from "jsonwebtoken";
 
 export default (req, res, next) => {
-  if(req.method === 'OPTIONS'){
+  if (req.method === "OPTIONS") {
     return next();
   }
   try {
@@ -14,6 +14,6 @@ export default (req, res, next) => {
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (err) {
-    return next(new HttpError("Authentication failed", 401));
+    return next(new HttpError("Authentication failed", 403));
   }
 };
