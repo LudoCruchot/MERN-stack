@@ -71,6 +71,9 @@ const UpdatePlace = () => {
         {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
+        },
+        {
+          Authorization: `Bearer ${auth.token}`
         }
       );
       history.push(`/${auth.userId}/places`);
