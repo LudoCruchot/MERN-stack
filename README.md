@@ -7,9 +7,9 @@ You can login, add many places with their own picture and description but also a
 
 ### Prerequisites
 
-- NodeJS
-- NPM
-- MongoDB (Atlas) (create the database and two collections: users and places)
+- NodeJS, download [here](https://nodejs.org/en/)
+- NPM, download [here](https://www.npmjs.com/)
+- MongoDB Atlas, connect [here](https://www.mongodb.com/cloud/atlas/lp/try2?utm_source=google&utm_campaign=gs_emea_france_search_brand_atlas_desktop&utm_term=mongodb%20atlas&utm_medium=cpc_paid_search&utm_ad=e&gclid=EAIaIQobChMIy_WEjrLP6QIVBIjVCh1IywzqEAAYASAAEgKCWPD_BwE) (create the database and two collections: users and places)
 
 ### Installing
 
