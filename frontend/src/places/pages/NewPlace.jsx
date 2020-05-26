@@ -15,6 +15,8 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const NewPlace = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -51,7 +53,7 @@ const NewPlace = () => {
       formData.append("address", formState.inputs.address.value);
       formData.append("image", formState.inputs.image.value);
 
-      await sendRequest("http://localhost:5000/api/places", "POST", formData, {
+      await sendRequest(`${BACKEND_URL}/places`, "POST", formData, {
         Authorization: `Bearer ${auth.token}`,
       });
       history.push("/");

@@ -1,8 +1,7 @@
 import axios from "axios";
 import HttpError from "../models/http-error";
-require("dotenv").config();
 
-const API_KEY = process.env.GOOGLE_MAP_API_KEY;
+const API_KEY = process.env.GOOGLE_API_KEY;
 
 export const getCoordsForAddress = async (address) => {
   const response = await axios.get(

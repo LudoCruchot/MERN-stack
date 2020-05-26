@@ -8,7 +8,10 @@ import placesRoutes from "./routes/places-routes";
 import usersRoutes from "./routes/users-routes";
 import HttpError from "./models/http-error";
 
-const DB_URL = process.env.DB_URL;
+//const DB_URL = process.env.DB_URL;
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
 const app = express();
 
@@ -50,10 +53,13 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(DB_URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  })
+  .connect(
+    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@antoinecluster-mrdww.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    }
+  )
   .then(() => {
     console.log("Connected");
     app.listen(5000);

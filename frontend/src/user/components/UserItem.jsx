@@ -5,6 +5,8 @@ import Avatar from "../../shared/components/UIElements/Avatar.jsx";
 import Card from "../../shared/components/UIElements/Card.jsx";
 import "./UserItem.css";
 
+const ASSET_URL = process.env.REACT_APP_ASSET_URL;
+
 const UserItem = (props) => {
   const { id, name, image, placeCount } = props;
   return (
@@ -12,11 +14,7 @@ const UserItem = (props) => {
       <Card className="user-item__content">
         <Link to={`/${id}/places`}>
           <div className="user-item__image">
-            <Avatar
-              image={`http://localhost:5000/${image}`}
-              alt={name}
-              name={name}
-            />
+            <Avatar image={`${ASSET_URL}/${image}`} alt={name} name={name} />
           </div>
           <div className="user-item__info">
             <h2>{name}</h2>

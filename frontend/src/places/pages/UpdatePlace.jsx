@@ -15,6 +15,8 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const UpdatePlace = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -38,9 +40,7 @@ const UpdatePlace = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        const response = await sendRequest(
-          `http://localhost:5000/api/places/${placeId}`
-        );
+        const response = await sendRequest(`${BACKEND_URL}/places/${placeId}`);
         setPlace(response.data.place);
         setFormData(
           {
@@ -66,14 +66,14 @@ const UpdatePlace = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/places/${placeId}`,
+        `${BACKEND_URL}/places/${placeId}`,
         "PATCH",
         {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
         },
         {
-          Authorization: `Bearer ${auth.token}`
+          Authorization: `Bearer ${auth.token}`,
         }
       );
       history.push(`/${auth.userId}/places`);

@@ -2,6 +2,7 @@
 
 # data
 /uploads
+nodemon.json
 
 # dependencies
 /node_modules
