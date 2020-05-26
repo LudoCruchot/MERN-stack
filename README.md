@@ -28,7 +28,8 @@ Then, you need to create a database called _places_ with two collections named _
 
 ### Usage
 
-Running frontend\
+#### Running frontend
+
 Rename the `.env_sample` file into `.env` and set your own environment variables
 
 ```
@@ -42,7 +43,8 @@ REACT_APP_ASSET_URL=YOUR_ASSET_URL
 $ npm start
 ```
 
-Running backend\
+#### Running backend
+
 Rename the `nodemon_sample.json` file into `nodemon.json` and set your own environment variables
 
 ```json
