@@ -29,19 +29,32 @@ Then, you need to create a database called _places_ with two collections named _
 ### Usage
 
 Running frontend
+Rename the `.env_sample` file into `.env` and set your own environment variables
+
+```
+REACT_APP_GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+REACT_APP_BACKEND_URL=YOUR_BACKEND_URL
+REACT_APP_ASSET_URL=YOUR_ASSET_URL
+```
 
 ```
 <yourLocalRepo>/frontend
 $ npm start
 ```
 
-Running backend (currently in construction)\
-Rename the `.env_sample` file into `.env` and set your own environment variables
+Running backend\
+Rename the `nodemon_sample.json` file into `nodemon.json` and set your own environment variables
 
-```
-GOOGLE_MAP_API_KEY=YOUR_API_KEY
-DB_URL=YOU_DB_URL
-PORT=YOUR_PORT
+```json
+{
+  "env": {
+    "DB_USER": "Your user name",
+    "DB_PASSWORD": "Your password",
+    "DB_NAME": "Your database name",
+    "GOOGLE_API_KEY": "Your google api key",
+    "JWT_KEY": "Your JWT key"
+  }
+}
 ```
 
 ```
